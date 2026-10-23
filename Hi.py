@@ -291,20 +291,15 @@ class game:
 
     def make_monster(self, t, x, y, c):
         if t == "rat":
-            self.monsters.append({"x": x, "y": y, "w": 24, "h": 20, "type": "rat", "hp": 1+c["hp_bonus"], "maxhp": 1+c["hp_bonus"],
-                                  "spd": 3.1*c["speed_mul"], "color": "gray60", "score": 10, "gold": 4, "cd": 1.5, "wt": 0, "wa": 0})
+            self.monsters.append({"x": x, "y": y, "w": 24, "h": 20, "type": "rat", "hp": 1+c["hp_bonus"], "maxhp": 1+c["hp_bonus"], "spd": 3.1*c["speed_mul"], "color": "gray60", "score": 10, "gold": 4, "cd": 1.5, "wt": 0, "wa": 0})
         elif t == "bat":
-            self.monsters.append({"x": x, "y": y, "w": 22, "h": 22, "type": "bat", "hp": 1+c["hp_bonus"], "maxhp": 1+c["hp_bonus"],
-                                  "spd": 2.3*c["speed_mul"], "color": "mediumorchid", "score": 15, "gold": 6, "cd": 1.5, "wt": 0, "wa": 0})
+            self.monsters.append({"x": x, "y": y, "w": 22, "h": 22, "type": "bat", "hp": 1+c["hp_bonus"], "maxhp": 1+c["hp_bonus"], "spd": 2.3*c["speed_mul"], "color": "mediumorchid", "score": 15, "gold": 6, "cd": 1.5, "wt": 0, "wa": 0})
         elif t == "skeleton":
-            self.monsters.append({"x": x, "y": y, "w": 24, "h": 28, "type": "skeleton", "hp": 2+c["hp_bonus"]//2, "maxhp": 2+c["hp_bonus"]//2,
-                                  "spd": 1.7*c["speed_mul"], "color": "beige", "score": 20, "gold": 8, "cd": 2.0, "fire": 2.3, "wt": 0, "wa": 0})
+            self.monsters.append({"x": x, "y": y, "w": 24, "h": 28, "type": "skeleton", "hp": 2+c["hp_bonus"]//2, "maxhp": 2+c["hp_bonus"]//2, "spd": 1.7*c["speed_mul"], "color": "beige", "score": 20, "gold": 8, "cd": 2.0, "fire": 2.3, "wt": 0, "wa": 0})
         elif t == "orc":
-            self.monsters.append({"x": x, "y": y, "w": 34, "h": 34, "type": "orc", "hp": 6+c["hp_bonus"]*2, "maxhp": 6+c["hp_bonus"]*2,
-                                  "spd": 1.15*c["speed_mul"], "color": "mediumseagreen", "score": 35, "gold": 14, "cd": 2, "wt": 0, "wa": 0})
+            self.monsters.append({"x": x, "y": y, "w": 34, "h": 34, "type": "orc", "hp": 6+c["hp_bonus"]*2, "maxhp": 6+c["hp_bonus"]*2, "spd": 1.15*c["speed_mul"], "color": "mediumseagreen", "score": 35, "gold": 14, "cd": 2, "wt": 0, "wa": 0})
         elif t == "knight":
-            self.monsters.append({"x": x, "y": y, "w": 26, "h": 26, "type": "knight", "hp": 2+c["hp_bonus"], "maxhp": 2+c["hp_bonus"],
-                                  "spd": 2.55*c["speed_mul"], "color": "tomato", "score": 10, "gold": 5, "cd": 2, "wt": 0, "wa": 0})
+            self.monsters.append({"x": x, "y": y, "w": 26, "h": 26, "type": "knight", "hp": 2+c["hp_bonus"], "maxhp": 2+c["hp_bonus"], "spd": 2.55*c["speed_mul"], "color": "tomato", "score": 10, "gold": 5, "cd": 2, "wt": 0, "wa": 0})
 
     def spawn_knight(self, x, y):
         side = -30 if random.random() < 0.5 else 30
@@ -320,9 +315,7 @@ class game:
             d = math.hypot(cx-self.player["x"], cy-self.player["y"])
             if d > fd:
                 fd, far = d, r
-        self.boss = {"x": far["x"]*TILE + far["w"]*TILE/2, "y": far["y"]*TILE + max(2, far["h"]//2)*TILE,
-                     "w": 80, "h": 80, "type": "boss", "hp": hp, "maxhp": hp, "spd": 1.0+self.floor*0.04,
-                     "color": "magenta", "score": 1000, "gold": 200, "cd": 2.4, "fire": 2.4, "sum": 6.0, "wt": 0, "wa": 0}
+        self.boss = {"x": far["x"]*TILE + far["w"]*TILE/2, "y": far["y"]*TILE + max(2, far["h"]//2)*TILE, "w": 80, "h": 80, "type": "boss", "hp": hp, "maxhp": hp, "spd": 1.0+self.floor*0.04, "color": "magenta", "score": 1000, "gold": 200, "cd": 2.4, "fire": 2.4, "sum": 6.0, "wt": 0, "wa": 0}
         self.monsters.append(self.boss)
 
     def monster_sees(self, m, reach):
@@ -487,11 +480,7 @@ class game:
             ang = random.random()*math.pi*2
             sp = random.random()*160 + 40
             life = random.uniform(0.25, 0.7)
-            self.particles.append({"x": x, "y": y,
-                                   "vx": math.cos(ang)*sp, "vy": math.sin(ang)*sp,
-                                   "life": life, "max": life,
-                                   "r": random.randint(size, size*3),
-                                   "color": color})
+            self.particles.append({"x": x, "y": y, "vx": math.cos(ang)*sp, "vy": math.sin(ang)*sp, "life": life, "max": life, "r": random.randint(size, size*3), "color": color})
         if ring:
             self.rings.append({"x": x, "y": y, "r": 2, "max_r": 30+size*8, "life": 0.35})
         self.shake = min(18, self.shake + shake)
@@ -599,9 +588,7 @@ class game:
         self.swings = [s for s in self.swings if s["life"] > 0]
         if random.random() < 0.06 and self.torches:
             t = random.choice(self.torches)
-            self.particles.append({"x": t["x"]+random.uniform(-2, 2), "y": t["y"]-4,
-                                   "vx": random.uniform(-5, 5), "vy": -24-random.uniform(0, 14),
-                                   "life": 0.5, "max": 0.5, "r": 2, "color": "orangered"})
+            self.particles.append({"x": t["x"]+random.uniform(-2, 2), "y": t["y"]-4, "vx": random.uniform(-5, 5), "vy": -24-random.uniform(0, 14), "life": 0.5, "max": 0.5, "r": 2, "color": "orangered"})
         self.shake = max(0, self.shake - dt*30)
         self.flash = max(0, self.flash - dt*3)
         self.banner_t = max(0, self.banner_t - dt)
@@ -631,8 +618,7 @@ class game:
 
         for t in self.torches:
             flick = math.sin(self.time_now*7 + t["phase"]) > 0
-            c.create_oval(t["x"]+ox-26, t["y"]+oy-26, t["x"]+ox+26, t["y"]+oy+26,
-                          fill="orange", outline="", stipple="gray25" if flick else "gray12")
+            c.create_oval(t["x"]+ox-26, t["y"]+oy-26, t["x"]+ox+26, t["y"]+oy+26, fill="orange", outline="", stipple="gray25" if flick else "gray12")
             c.create_rectangle(t["x"]-2+ox, t["y"]-8+oy, t["x"]+2+ox, t["y"]+oy, fill="orangered", outline="")
             c.create_rectangle(t["x"]-1+ox, t["y"]-11+oy, t["x"]+1+ox, t["y"]-7+oy, fill="gold", outline="")
 
@@ -649,8 +635,7 @@ class game:
         for s in self.swings:
             deg_a = s["a"] + 1.25
             start = -math.degrees(deg_a)
-            c.create_arc(s["x"]+ox-32, s["y"]+oy-32, s["x"]+ox+32, s["y"]+oy+32,
-                         start=start, extent=143, style="arc", outline="white", width=5)
+            c.create_arc(s["x"]+ox-32, s["y"]+oy-32, s["x"]+ox+32, s["y"]+oy+32, start=start, extent=143, style="arc", outline="white", width=5)
 
         for cn in self.coins:
             bob = math.sin(self.time_now*5 + cn["x"])*1.5
