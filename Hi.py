@@ -3,6 +3,7 @@ import random, math, time
 
 WIDTH, HEIGHT = 800, 600
 TILE, COLS, ROWS = 30, 20, 20
+MAX_FLOOR = 12
 
 SHOP = [
     ("heal",   "HEAL HEART",    30, "+1 heart"),
@@ -557,6 +558,16 @@ class game:
         if self.player["hearts"] < self.player["max_hearts"]:
             self.player["hearts"] += 1
             self.popup(self.player["x"]-20, self.player["y"]-58, "+1 HEART", "lime")
+        if self.floor >= MAX_FLOOR:
+            for m in list(self.monsters):
+                self.explode(m["x"], m["y"], "gold", 15, size=3, shake=2)
+                if m in self.monsters:
+                    self.monsters.remove(m)
+            self.arrows = []
+            self.flash = 1
+            self.explode(self.player["x"], self.player["y"], "gold", 60, size=6, shake=10)
+            self.game_over = True
+            return
         self.break_timer = 2.0
         if (self.floor+1) % 3 == 0:
             self.banner = "THE OGRE COMES NEXT..."
@@ -636,7 +647,6 @@ class game:
         for t in self.texts:
             c.create_text(t["x"]+ox, t["y"]+oy, text=t["text"], fill=t["color"], font=("Arial", 14, "bold"))
         for s in self.swings:
-            al = s["life"]/s["max"]
             deg_a = s["a"] + 1.25
             start = -math.degrees(deg_a)
             c.create_arc(s["x"]+ox-32, s["y"]+oy-32, s["x"]+ox+32, s["y"]+oy+32,
@@ -708,9 +718,14 @@ class game:
         if self.paused:
             c.create_text(WIDTH//2, HEIGHT//2, text="paused(p)", fill="yellow", font=("Arial", 26))
         if self.game_over:
-            c.create_rectangle(0, 0, WIDTH, HEIGHT, fill="black", stipple="gray50")
-            c.create_text(WIDTH//2, HEIGHT//2, text="you died", fill="red", font=("Arial", 30))
-            c.create_text(WIDTH//2, HEIGHT//2+40, text=f"score {self.score} gold {self.gold} floors {self.floor} - press r to restart", fill="white", font=("Arial", 13))
+            c.create_rectangle(0, 0, WIDTH, HEIGHT, fill="black",
+                               stipple="gray25" if self.floor >= MAX_FLOOR else "gray50")
+            if self.floor >= MAX_FLOOR:
+                c.create_text(WIDTH//2, HEIGHT//2, text="you escaped the dungeon", fill="gold", font=("Arial", 30))
+                c.create_text(WIDTH//2, HEIGHT//2+40, text=f"score {self.score} gold {self.gold} - press r to play again", fill="white", font=("Arial", 13))
+            else:
+                c.create_text(WIDTH//2, HEIGHT//2, text="you died", fill="red", font=("Arial", 30))
+                c.create_text(WIDTH//2, HEIGHT//2+40, text=f"score {self.score} gold {self.gold} floor {self.floor} - press r to restart", fill="white", font=("Arial", 13))
         if self.shop:
             self.draw_shop()
 
